@@ -1,0 +1,110 @@
+openapi: "3.0.2"
+info:
+  title: ToDo
+  version: "1.0"
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /todo-list/{list_id}:
+    get:
+      description: Liefert alle Einträge einer Todo-Liste zurück.
+      parameters:
+        - in: path
+          name: list_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric in of the list to get
+      responses:
+        '200':
+          description: A list of entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/todolist'
+    delete:
+      description: Löscht eine komplette Todo-Liste mit allen Einträgen.
+      parameters:
+        - in: path
+          name: list_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the list to delete.
+      responses:
+        '200':
+          description: List was successfully deleted.
+        '404':
+          description: List was not found.
+
+  /todo-list/:
+    post:
+      description: Fügt eine neue Todo-Liste hinzu.
+      parameters:
+        - in: query
+          name: todo-list
+          schema:
+            $ref: '#/components/schemas/todolist'
+          required: true
+      responses:
+        '200':
+          description: The created ToDo-List.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/todolist'
+
+  /todo-list/{list_id}/entry/:
+    post:
+      description: Fügt einen Eintrag zu einer bestehenden Todo-Liste hinzu.
+      parameters:
+        - in: path
+          name: list-id
+          schema:
+            type: integer
+          description: Numeric Id of list
+          required: true
+
+
+
+
+components:
+  schemas:
+    todolist:
+      type: object
+      required:
+        - id
+        - name
+        - user-id
+      description: ToDo-List
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+        user-id:
+          type: integer
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/entry'
+        description:
+          type: string
+
+    entry:
+      type: object
+      required:
+        - id
+        - name
+        - list-id
+      description: ToDo-Entry
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+        description:
+          type: string
+        user-id:
+          type: integer
+
