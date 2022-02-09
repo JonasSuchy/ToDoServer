@@ -59,13 +59,115 @@ paths:
       description: Fügt einen Eintrag zu einer bestehenden Todo-Liste hinzu.
       parameters:
         - in: path
-          name: list-id
+          name: list_id
           schema:
             type: integer
           description: Numeric Id of list
           required: true
+        - in: query
+          name: entry
+          schema:
+            $ref: '#/components/schemas/entry'
+          required: true
+      responses:
+        '200':
+          description: The created entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entry'
 
+  /todo-list/{list_id}/entry/{entry_id}:
+    put:
+      description: Aktualisiert einen bestehenden Eintrag.
+      parameters:
+        - in: path
+          name: list_id
+          schema:
+            type: integer
+          description: Numeric Id of list
+          required: true
+        - in: path
+          name: entry_id
+          schema:
+            type: integer
+          description: Numeric Id of entry
+          required: true
+        - in: query
+          name: entry
+          schema:
+            $ref: '#/components/schemas/entry'
+          required: true
+      responses:
+        '200':
+          description: The edited entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entry'
+    delete:
+      description: Löscht einen einzelnen Eintrag einer Todo-Liste.
+      parameters:
+        - in: path
+          name: list_id
+          schema:
+            type: integer
+          description: Numeric Id of list
+          required: true
+        - in: path
+          name: entry_id
+          schema:
+            type: integer
+          description: Numeric Id of entry
+          required: true
+      responses:
+        '200':
+          description: Entry was successfully deleted.
+        '404':
+          description: Entry was not found.
 
+  /user:
+    get:
+      description: Liefert alle User zurück.
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+    post:
+      description: Fügt einen neuen Benutzer hinzu.
+      parameters:
+        - in: query
+          description: The User you want to add.
+          name: user
+          schema:
+            $ref: '#/components/schemas/user'
+          required: true
+      responses:
+        '200':
+          description: The created user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+  /user/{user_id}:
+    delete:
+      description: Löscht einen einzelnen User.
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          description: Numeric Id of user
+          required: true
+      responses:
+        '200':
+          description: User was successfully deleted.
+        '404':
+          description: User was not found.
 
 
 components:
@@ -108,3 +210,14 @@ components:
         user-id:
           type: integer
 
+    user:
+      type: object
+      required:
+        - id
+        - name
+      description: User
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
