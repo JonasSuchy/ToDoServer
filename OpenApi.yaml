@@ -12,9 +12,10 @@ paths:
         - in: path
           name: list_id
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
-          description: Numeric in of the list to get
+          description: in of the list to get
       responses:
         '200':
           description: A list of entries
@@ -28,9 +29,10 @@ paths:
         - in: path
           name: list_id
           schema:
-            type: integer
+            type: string
+            format: uuid
           required: true
-          description: Numeric Id of the list to delete.
+          description: Id of the list to delete.
       responses:
         '200':
           description: List was successfully deleted.
@@ -61,8 +63,9 @@ paths:
         - in: path
           name: list_id
           schema:
-            type: integer
-          description: Numeric Id of list
+            type: string
+            format: uuid
+          description: Id of list
           required: true
       requestBody:
         content:
@@ -85,14 +88,16 @@ paths:
         - in: path
           name: list_id
           schema:
-            type: integer
-          description: Numeric Id of list
+            type: string
+            format: uuid
+          description: Id of list
           required: true
         - in: path
           name: entry_id
           schema:
-            type: integer
-          description: Numeric Id of entry
+            type: string
+            format: uuid
+          description: Id of entry
           required: true
       requestBody:
         content:
@@ -113,14 +118,16 @@ paths:
         - in: path
           name: list_id
           schema:
-            type: integer
-          description: Numeric Id of list
+            type: string
+            format: uuid
+          description: Id of list
           required: true
         - in: path
           name: entry_id
           schema:
-            type: integer
-          description: Numeric Id of entry
+            type: string
+            format: uuid
+          description:  Id of entry
           required: true
       responses:
         '200':
@@ -162,7 +169,8 @@ paths:
           name: user_id
           schema:
             type: string
-          description: Numeric Id of user
+            format: uuid
+          description: Id of user
           required: true
       responses:
         '200':
@@ -184,9 +192,11 @@ components:
         name:
           type: string
         id:
-          type: integer
+          type: string
+          format: uuid
         user-id:
-          type: integer
+          type: string
+          format: uuid
         entries:
           type: array
           items:
@@ -205,11 +215,13 @@ components:
         name:
           type: string
         id:
-          type: integer
+          type: string
+          format: uuid
         description:
           type: string
         user-id:
-          type: integer
+          type: string
+          format: uuid
 
     user:
       type: object
@@ -221,4 +233,5 @@ components:
         name:
           type: string
         id:
-          type: integer
+          type: string
+          format: uuid
