@@ -40,12 +40,12 @@ paths:
   /todo-list/:
     post:
       description: Fügt eine neue Todo-Liste hinzu.
-      parameters:
-        - in: query
-          name: todo-list
-          schema:
-            $ref: '#/components/schemas/todolist'
-          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/todolist'
+        required: true
       responses:
         '200':
           description: The created ToDo-List.
@@ -64,11 +64,12 @@ paths:
             type: integer
           description: Numeric Id of list
           required: true
-        - in: query
-          name: entry
-          schema:
-            $ref: '#/components/schemas/entry'
-          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entry'
+        required: true
       responses:
         '200':
           description: The created entry.
@@ -93,11 +94,12 @@ paths:
             type: integer
           description: Numeric Id of entry
           required: true
-        - in: query
-          name: entry
-          schema:
-            $ref: '#/components/schemas/entry'
-          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entry'
+        required: true
       responses:
         '200':
           description: The edited entry.
@@ -138,13 +140,12 @@ paths:
                 $ref: '#/components/schemas/user'
     post:
       description: Fügt einen neuen Benutzer hinzu.
-      parameters:
-        - in: query
-          description: The User you want to add.
-          name: user
-          schema:
-            $ref: '#/components/schemas/user'
-          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
       responses:
         '200':
           description: The created user.
@@ -160,7 +161,7 @@ paths:
         - in: path
           name: user_id
           schema:
-            type: integer
+            type: string
           description: Numeric Id of user
           required: true
       responses:
