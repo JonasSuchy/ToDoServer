@@ -93,14 +93,26 @@ def add_new_list():
 def get_all_lists():
  return jsonify(todo_lists)
 
-#deife endpoint
-@app.route('/todo-list/{list_id}/entry', methods=['post'])
+#define endpoint for adding a new entry to a list
+@app.route('/todo-list/<list_id>/entry', methods=['post', 'put'])
 def add_new_entry():
  new_entry = request.get_json(force=True)
- print('Got new entry to be added: {}'.format(new_entry))
- new_entry['id'] = uuid.uuid4()
+ if request.method == 'post':
+  print('Got new entry to be added: {}'.format(new_entry))
+  new_entry['id'] = uuid.uuid4()
+ elif request.method == 'put':
+  print('Got entry to update: {}'.format(new_entry))
+  old_item = None
+  for n in entries:
+   if n['id'] == new_entry['id'] and n['list'] == new_entry['list']:
+    old_item = n
+  if not old_item:
+   abort(404)
+  entries.remove(old_item)
  entries.append(new_entry)
  return jsonify(new_entry), 200
+#define endpoint
+
 
 if __name__ == '__main__':
  # start Flask server
